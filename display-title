@@ -1,0 +1,29 @@
+#! /usr/bin/env sh
+
+mode=$(i3var get pbtitlemode)
+
+clipboarder(){
+    echo "%{A3: echo '$1' | xclip -selection clipboard:}$1%{A}"
+}
+
+if [[ $1 = switch ]]; then
+    if [[ $mode = advanced ]]; then
+        i3var set pbtitlemode normal
+        mode=normal
+    else
+        i3var set pbtitlemode advanced
+        mode=advanced
+    fi
+fi
+
+
+if [[ $mode = advanced ]]; then
+    active_window_class=$(i3get -r c)
+    active_window_instance=$(i3get -r i)
+    output="$(clipboarder "$active_window_class") --- $(clipboarder "$active_window_instance")"
+else
+    active_window_title=$(i3get -r t)
+    output="$(clipboarder "$active_window_title")"
+fi
+
+echo "%{A1:polybar-msg hook titlehook 3:}${output//\"}%{A}"
