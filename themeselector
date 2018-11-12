@@ -1,0 +1,10 @@
+#! /usr/bin/env sh
+
+XRES_FILES="$HOME/.Xresources"
+selected=$(ls "$HOME/dotfiles/.config/xfiles/themes" | rofi -dmenu -theme local-solarized -p "autoscript: ")
+
+[[ -f $selected ]] && exit
+
+sed -i --follow-symlinks "/\#include \"dotfiles\/.config\/xfiles\/themes\//c\\#include \"dotfiles\/.config\/xfiles\/themes\/$selected\"" "$XRES_FILES"
+reloader
+

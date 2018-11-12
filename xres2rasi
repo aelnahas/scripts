@@ -1,0 +1,14 @@
+#! /usr/bin/env sh
+
+FILE=$HOME/.config/rofi/globals.rasi
+RESOURCES="accent bg1 bg2 fg1 fg2 redish adarker"
+
+# copy the current Xresources colors to rofi rasi global config
+for resource in $RESOURCES; do
+  color=$(xrdb -query | awk -v reso=$resource '$1~reso{print $2}')
+  sed -i --follow-symlinks "/$resource:/c\\      $resource:               $color;" "$FILE"
+done
+
+fontname=$(xrdb -quer | awk '/font1/{print $2}')
+fontsize=$(xrdb -query | awk '/fontsize1/{print $2}')
+sed -i --follow-symlinks "/font1:/c\      font1:            \"$fontname $fontsize\";" "$FILE"

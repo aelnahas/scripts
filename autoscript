@@ -9,7 +9,7 @@ SCRIPT_LANG=${2:-sh}
 
 
 if [ -f $SCRIPT_FILE ]; then 
-    echo -e "\033[0;31m script \"$1\" already exist, check $SCRIPT_FILE"
+    code $SCRIPT_FILE
 else
     echo "#! /usr/bin/env $SCRIPT_LANG" > $SCRIPT_FILE
     chmod +x $SCRIPT_FILE

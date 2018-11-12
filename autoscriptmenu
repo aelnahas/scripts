@@ -1,0 +1,7 @@
+#! /usr/bin/env sh
+
+selected=$(ls "$HOME/scripts" | rofi -dmenu -theme local-solarized -p "autoscript: ")
+
+[[ -z $selected ]] && exit
+
+autoscript $selected
